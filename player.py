@@ -11,9 +11,25 @@ class Player():
         self.xvel = 0
         self.yvel = 0
 
-    def update(self):
-        self.x += self.xvel
-        self.y += self.yvel
+    def update(self, bounds):
+        self.x += int(self.xvel)
+        self.y += int(self.yvel)
+
+        if self.y < 0:
+            self.yvel = 0
+            self.y = 0
+
+        if self.x < 0:
+            self.xvel = 0
+            self.x = 0
+
+        if self.y + self.h > bounds[1]:
+            self.yvel = 0
+            self.y = bounds[1] - self.h
+
+        if self.x + self.w > bounds[0]:
+            self.xvel = 0
+            self.x = bounds[0] - self.w
 
     def render(self, context):
         sdl_rect = SDL_Rect(x = self.x, y = self.y, w = self.w, h = self.h)
