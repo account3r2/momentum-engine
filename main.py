@@ -32,29 +32,29 @@ while run:
             break
 
         elif event.type == SDL_KEYDOWN:
-            if event.key.keysym.scancode == SDL_SCANCODE_W:
+            if event.key.keysym.sym == SDLK_w:
                 keyboard_ycontrol -= 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_S:
+            elif event.key.keysym.sym == SDLK_s:
                 keyboard_ycontrol += 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_A:
+            elif event.key.keysym.sym == SDLK_a:
                 keyboard_xcontrol -= 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_D:
+            elif event.key.keysym.sym == SDLK_d:
                 keyboard_xcontrol += 1
 
         elif event.type == SDL_KEYUP:
-            if event.key.keysym.scancode == SDL_SCANCODE_W:
+            if event.key.keysym.sym == SDLK_w:
                 keyboard_ycontrol += 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_S:
+            elif event.key.keysym.sym == SDLK_s:
                 keyboard_ycontrol -= 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_A:
+            elif event.key.keysym.sym == SDLK_a:
                 keyboard_xcontrol += 1
 
-            elif event.key.keysym.scancode == SDL_SCANCODE_D:
+            elif event.key.keysym.sym == SDLK_d:
                 keyboard_xcontrol -= 1
 
     # Logic
