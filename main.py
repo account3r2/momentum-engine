@@ -58,8 +58,21 @@ while run:
                 keyboard_xcontrol -= 1
 
     # Logic
-    my_player.yvel += keyboard_ycontrol * player_accel_factor
-    my_player.xvel += keyboard_xcontrol * player_accel_factor
+    if keyboard_ycontrol != 0:
+        my_player.yvel += keyboard_ycontrol * player_accel_factor
+    else:
+        if my_player.yvel > 0:
+            my_player.yvel -= player_accel_factor
+        else:
+            my_player.yvel += player_accel_factor
+
+    if keyboard_xcontrol != 0:
+        my_player.xvel += keyboard_xcontrol * player_accel_factor
+    else:
+        if my_player.xvel > 0:
+            my_player.xvel -= player_accel_factor
+        else:
+            my_player.xvel += player_accel_factor
 
     my_player.update(win_size)
 
