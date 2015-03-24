@@ -27,8 +27,6 @@ import json
 
 com_sock = None
 
-# TODO : Again, hard-coding IP protocol version
-
 for res in socket.getaddrinfo(sys.argv[1], 12397, socket.AF_UNSPEC,
         socket.SOCK_DGRAM):
     fam, type, proto, cannonname, sockaddr = res
