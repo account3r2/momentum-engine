@@ -19,18 +19,18 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
+# System imports
 import socket
 import json
 
-# Force IPv4 connections at the moment
-# TODO: Make server IP version agnostic
+# Project imports
+import network
+import player
 
-server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-server_sock.bind(("localhost", 12397))
+connected_list = {}
 
 while True:
-    data, host = server_sock.recvfrom(4096)
+    data, host = network.recv_packet()
 
     print("\nPacket recieved from", host[0])
     print("Packet is", len(data), "bytes long, contains", repr(data.decode()))
@@ -41,4 +41,19 @@ while True:
         print("Packet is not valid JSON")
         continue
 
-    print("Packet type is", json_packet["type"])
+    print("Packet type is", repr(json_packet["type"]))
+
+    if json_packet["type"] == "join":
+        if not host[0] in connected_list:
+            connected_list[host[0]] = player.Player(375, 275, 25, 25)
+            network.send_packet(host, "success")
+        else:
+            network.send_packet(host, "failure", "Already connected")
+
+    if not host[0] in connected_list:
+        print("Recieved packet from unknown host", host[0],". Ignoring.")
+        continue
+
+    if json_packet["type"] == "leave":
+        del connected_list[host[0]]
+        network.send_packet(host, "success")
