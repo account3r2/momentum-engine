@@ -54,7 +54,8 @@ while True:
             common.network.send_packet(host, "success")
             print("Added host", host[0], "to connection list")
         else:
-            common.network.send_packet(host, "failure", "Already connected")
+            common.network.send_packet(host, "failure",
+                msg = "Already connected")
             print("Host", host[0], "is already connected")
 
     if not host[0] in connected_list:

@@ -32,7 +32,7 @@ __server_sock.bind(("localhost", 12397))
 def recv_packet():
     return __server_sock.recvfrom(4096)
 
-def send_packet(host, msg_type, msg = ''):
-    packet = json.dumps(dict(type = msg_type, msg = msg),
+def send_packet(host, msg_type, **params):
+    packet = json.dumps(dict(type = msg_type, **params),
             separators = (',',':'))
     __server_sock.sendto(packet.encode(), host)
