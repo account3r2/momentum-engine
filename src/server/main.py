@@ -47,8 +47,10 @@ while True:
         if not host[0] in connected_list:
             connected_list[host[0]] = player.Player(375, 275, 25, 25)
             network.send_packet(host, "success")
+            print("Added host", host[0], "to connection list")
         else:
             network.send_packet(host, "failure", "Already connected")
+            print("Host", host[0], "is already connected")
 
     if not host[0] in connected_list:
         print("Recieved packet from unknown host", host[0],". Ignoring.")
@@ -57,3 +59,4 @@ while True:
     if json_packet["type"] == "leave":
         del connected_list[host[0]]
         network.send_packet(host, "success")
+        print("Host", host[0], "removed from connection list")
