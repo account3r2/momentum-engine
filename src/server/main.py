@@ -20,7 +20,6 @@
 # 02110-1301, USA.
 
 # System imports
-import socket
 import json
 
 # Project imports
