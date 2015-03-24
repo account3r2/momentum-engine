@@ -20,16 +20,22 @@
 # 02110-1301, USA.
 
 # System imports
+import sys
 import json
 
+# Add project top-level directory to import path
+sys.path.append("..")
+
 # Project imports
-import network
+import common.network
 import player
+
+bounds = (800, 600)
 
 connected_list = {}
 
 while True:
-    data, host = network.recv_packet()
+    data, host = common.network.recv_packet()
 
     print("\nPacket recieved from", host[0])
     print("Packet is", len(data), "bytes long, contains", repr(data.decode()))
@@ -45,10 +51,10 @@ while True:
     if json_packet["type"] == "join":
         if not host[0] in connected_list:
             connected_list[host[0]] = player.Player(375, 275, 25, 25)
-            network.send_packet(host, "success")
+            common.network.send_packet(host, "success")
             print("Added host", host[0], "to connection list")
         else:
-            network.send_packet(host, "failure", "Already connected")
+            common.network.send_packet(host, "failure", "Already connected")
             print("Host", host[0], "is already connected")
 
     if not host[0] in connected_list:
@@ -57,5 +63,5 @@ while True:
 
     if json_packet["type"] == "leave":
         del connected_list[host[0]]
-        network.send_packet(host, "success")
+        common.network.send_packet(host, "success")
         print("Host", host[0], "removed from connection list")
