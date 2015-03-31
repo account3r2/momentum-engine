@@ -27,7 +27,14 @@ import json
 
 com_sock = None
 
-for res in socket.getaddrinfo(sys.argv[1], 12397, socket.AF_UNSPEC,
+server_addr = ""
+
+if len(sys.argv) < 2:
+    server_addr = "localhost"
+else:
+    server_addr = sys.argv[1]
+
+for res in socket.getaddrinfo(server_addr, 12397, socket.AF_UNSPEC,
         socket.SOCK_DGRAM):
     fam, type, proto, cannonname, sockaddr = res
 
@@ -47,7 +54,7 @@ while True:
     print("JSON packet to send:")
     packet_str = input("> ")
 
-    com_sock.sendto(packet_str.encode(), (sys.argv[1], 12397))
+    com_sock.sendto(packet_str.encode(), (server_addr, 12397))
 
     print("Waiting for server response...")
 
