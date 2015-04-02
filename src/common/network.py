@@ -20,19 +20,18 @@
 import socket
 import json
 
-# Ugly hack to make sure that __server_sock is actually
-# a socket, otherwise Python will throw up on it
-
-# Force IPv4 connections at the moment
-# TODO: Make server IP version agnostic
-
-__server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-__server_sock.bind(("localhost", 12397))
+def init_server():
+    # TODO: IP is always v4. Make it agnostic.
+    global __sock__
+    __sock__ = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    __sock__.bind(("localhost", 12397))
 
 def recv_packet():
-    return __server_sock.recvfrom(4096)
+    global __sock__
+    return __sock__.recvfrom(4096)
 
 def send_packet(host, msg_type, **params):
+    global __sock__
     packet = json.dumps(dict(type = msg_type, **params),
-            separators = (',',':'))
-    __server_sock.sendto(packet.encode(), host)
+        separators = (',',':'))
+    __sock__.sendto(packet.encode(), host)
