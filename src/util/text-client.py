@@ -27,8 +27,6 @@ import json
 
 com_sock = None
 
-server_addr = ""
-
 if len(sys.argv) < 2:
     server_addr = "localhost"
 else:
