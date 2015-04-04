@@ -46,6 +46,11 @@ while True:
         print("Packet is not valid JSON")
         continue
 
+    if not "type" in json_packet:
+        print("Packet has no 'type' object. Ignoring...")
+        continue
+
+
     print("Packet type is", repr(json_packet["type"]))
 
     if json_packet["type"] == "join":
