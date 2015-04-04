@@ -34,6 +34,8 @@ bounds = (800, 600)
 
 connected_list = {}
 
+common.network.init_server()
+
 while True:
     data, host = common.network.recv_packet()
 
