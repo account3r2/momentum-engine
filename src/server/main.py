@@ -30,13 +30,15 @@ sys.path.append("..")
 import common.network
 import player
 
-bounds = (800, 600)
-
-connected_list = {}
+world = {
+    "bounds" : (800, 600),
+    "player" : {"host":""},
+}
 
 common.network.init_server()
 
 while True:
+    # Handle incoming packets
     data, host = common.network.recv_packet()
 
     print("\nPacket recieved from", host[0])
@@ -55,20 +57,24 @@ while True:
     print("Packet type is", repr(json_packet["type"]))
 
     if json_packet["type"] == "join":
-        if not host[0] in connected_list:
-            connected_list[host[0]] = player.Player(375, 275, 25, 25)
+        if world["player"]["host"] == "":
+            world["player"]["host"] = host[0]
+            world["player"]["object"] = player.Player(375, 275, 25, 25)
             common.network.send_packet(host, "success")
             print("Added host", host[0], "to connection list")
-        else:
+        elif world["player"]["host"] == host[0]:
             common.network.send_packet(host, "failure",
                 msg = "Already connected")
             print("Host", host[0], "is already connected")
+        else:
+            common.network.send_packet(host, "failure", msg = "Limit reached")
 
-    if not host[0] in connected_list:
+    if host[0] != world["player"]["host"]:
         print("Recieved packet from unknown host", host[0],". Ignoring.")
         continue
 
     if json_packet["type"] == "leave":
-        del connected_list[host[0]]
+        world["player"]["host"] = ""
+        del world["player"]["object"]
         common.network.send_packet(host, "success")
-        print("Host", host[0], "removed from connection list")
+        print("Host", host[0], "disconnected")
