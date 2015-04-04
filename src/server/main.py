@@ -78,3 +78,18 @@ while True:
         del world["player"]["object"]
         common.network.send_packet(host, "success")
         print("Host", host[0], "disconnected")
+
+    if json_packet["type"] == "retrieve":
+        if not "what" in json_packet:
+            common.network.send_packet(host, "failure",
+                msg = "No object specified")
+            continue
+
+        if not json_packet["what"] in world:
+            common.network.send_packet(host, "failure",
+                msg = "No such value '{}'".format(json_packet["what"]))
+            continue
+
+        common.network.send_packet(host, "retrieve",
+            value = json.dumps(world[json_packet["what"]],
+            separators = (',',':')), what = json_packet["what"])
