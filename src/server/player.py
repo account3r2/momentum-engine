@@ -17,6 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
+__player_accel_factor = 1 / 8
+
 class Player():
     def __init__(self, x, y, w, h):
         self.x = x
@@ -25,10 +27,28 @@ class Player():
         self.h = h
         self.xvel = 0
         self.yvel = 0
+        self.xmovement = 0
+        self.ymovement = 0
 
     def update(self, bounds):
         self.x += int(self.xvel)
         self.y += int(self.yvel)
+
+        if self.xmovement != 0:
+            self.xvel += self.xmovement * __player_accel_factor
+        else:
+            if self.xvel > 0:
+                self.xvel -= __player_accel_factor
+            else:
+                self.xvel += __player_accel_factor
+
+        if self.ymovement != 0:
+            self.yvel += self.ymovement * __player_accel_factor
+        else:
+            if self.yvel > 0:
+                self.yvel -= __player_accel_factor
+            else:
+                self.yvel += __player_accel_factor
 
         if self.y < 0:
             self.yvel = 0
