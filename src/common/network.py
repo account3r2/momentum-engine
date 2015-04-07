@@ -28,7 +28,14 @@ def init_server():
 
 def recv_packet():
     global __sock__
-    return __sock__.recvfrom(4096)
+    data, host = __sock__.recvfrom(4096)
+
+    try:
+        packet = json.loads(data.decode())
+    except ValueError:
+        return None, host
+
+    return packet, host
 
 def send_packet(host, msg_type, **params):
     global __sock__

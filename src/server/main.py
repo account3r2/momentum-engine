@@ -39,14 +39,11 @@ common.network.init_server()
 
 while True:
     # Handle incoming packets
-    data, host = common.network.recv_packet()
+    json_packet, host = common.network.recv_packet()
 
     print("\nPacket recieved from", host[0])
-    print("Packet is", len(data), "bytes long, contains", repr(data.decode()))
 
-    try:
-        json_packet = json.loads(data.decode())
-    except ValueError:
+    if json_packet is None:
         print("Packet is not valid JSON")
         continue
 
