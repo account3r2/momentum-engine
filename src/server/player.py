@@ -30,6 +30,12 @@ class Player():
         self.xmovement = 0
         self.ymovement = 0
 
+    def __getitem__(self, k):
+        return self.__getattr__(k)
+
+    def __setitem__(self, k, v):
+        self.__setattr__(k, v)
+
     def update(self, bounds):
         self.x += int(self.xvel)
         self.y += int(self.yvel)

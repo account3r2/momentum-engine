@@ -89,7 +89,22 @@ while True:
             common.network.send_packet(host, "failure",
                 msg = "No such value '{}'".format(json_packet["what"]))
             continue
+        # Do a temporary special case check for Player class objects
+        if json_packet["what"] == "player":
+            common.network.send_packet(host, "retrieve",
+                value = json.dumps(world["player"]["object"].__dict__,
+                separators = (',',':')), what = json_packet["what"])
+        else:
+            common.network.send_packet(host, "retrieve",
+                value = json.dumps(world[json_packet["what"]],
+                separators = (',',':')), what = json_packet["what"])
 
-        common.network.send_packet(host, "retrieve",
-            value = json.dumps(world[json_packet["what"]],
-            separators = (',',':')), what = json_packet["what"])
+    if json_packet["type"] == "update":
+        # Assume we are updating the host's player
+
+        if not "value" in json_packet:
+            print("No value given in 'update' packet")
+            continue
+
+        for k in json_packet["value"]:
+            world["player"]["object"][k] = json_packet["value"][k]
