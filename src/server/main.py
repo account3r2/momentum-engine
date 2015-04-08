@@ -54,6 +54,8 @@ while True:
     print("Packet type is", repr(json_packet["type"]))
 
     if json_packet["type"] == "join":
+        # TODO : Only a single client is allowed.
+        # Allow multiple concurrent clients
         if world["player"]["host"] == "":
             world["player"]["host"] = host[0]
             world["player"]["object"] = player.Player(375, 275, 25, 25)
@@ -87,6 +89,7 @@ while True:
                 msg = "No such value '{}'".format(json_packet["what"]))
             continue
         # Do a temporary special case check for Player class objects
+        # TODO : Make it so that there is no need for special case check
         if json_packet["what"] == "player":
             common.network.send_packet(host, "retrieve",
                 value = json.dumps(world["player"]["object"].__dict__,
@@ -98,6 +101,7 @@ while True:
 
     if json_packet["type"] == "update":
         # Assume we are updating the host's player
+        # TODO : This will need to be generalized for multiple players
 
         if not "value" in json_packet:
             print("No value given in 'update' packet")
