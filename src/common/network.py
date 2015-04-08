@@ -26,6 +26,20 @@ def init_server():
     __sock__ = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     __sock__.bind(("localhost", 12397))
 
+def init_client(addr, port):
+    global __sock__
+    for r in socket.getaddrinfo(addr, port, socket.AF_UNSPEC,
+            socket.SOCK_DGRAM):
+        fam, type, proto, cannonname, sockaddr = r
+
+        try:
+            __sock__ = socket.socket(fam, type, proto)
+        except OSError:
+            __sock__ = None
+            continue
+
+    return __sock__ is not None
+
 def recv_packet():
     global __sock__
     data, host = __sock__.recvfrom(4096)
