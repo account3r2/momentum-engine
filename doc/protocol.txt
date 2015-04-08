@@ -1,0 +1,52 @@
+All packets are JSON objects. Each packet needs to have a 'type' field,
+otherwise they will be ignored.
+
+'Success' packet
+-----
+Additional parameters - none
+
+A packet used to signify a successful operation from reciever to original
+sender.
+
+'Failure' packet
+-----
+Additional parameters -
+'msg' - human-readable description of why the failure occured
+
+A packet used to signify a failed operation from reciever to original sender.
+
+'Join' packet
+-----
+Additional parameters - none
+
+Sent by a client to a server to ask to join the game.
+Server will respond with either 'success' or 'failure'.
+
+'Leave' packet
+-----
+Additional parameters - none
+
+Sent by a client to a server to notify it of the client's imminent departure.
+Server may send back a 'success' packet if it so chooses.
+
+'Retrieve' packet
+-----
+Additional parameters -
+'what' - the requested object
+
+Sent to either client or server to ask for the value of an object.
+The response will be a packet of 'retrieve' type, containing fields 'what',
+which is the name of the requested object, and 'value', the JSONified version
+of the object.
+
+'Update' packet
+-----
+Additional parameters -
+'value' - New value delta
+
+Sent to either client or server to update the value of an object. The 'value'
+parameter is a delta; that is, the values inside are applied to the object, and
+values not mentioned will be left as-is. The object will not simply become a
+copy of the specified 'value' parameter.
+
+
