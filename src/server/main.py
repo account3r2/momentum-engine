@@ -105,3 +105,6 @@ while True:
 
         for k in json_packet["value"]:
             world["player"]["object"][k] = json_packet["value"][k]
+
+    if "object" in world["player"]:
+        world["player"]["object"].update(world["bounds"])
