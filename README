@@ -1,0 +1,11 @@
+Momentum Engine - 2D Semi-realistic platforming engine
+Copyright (c) 2015 Robert Cochran
+
+To run server :
+Change directory to src/server/, then run main.py
+
+To run client :
+Change directory to src/client/, then run main.py
+
+Client depends on PySDL2. Find it here -
+https://pysdl2.readthedocs.org/en/latest/
