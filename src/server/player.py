@@ -27,7 +27,7 @@ class Player():
         self.yvel = 0
         self.xmovement = 0
         self.ymovement = 0
-        self.accel = 1 / 8
+        self.accel = 1 / 2
 
     def __getitem__(self, k):
         return self.__getattr__(k)
