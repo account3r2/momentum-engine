@@ -31,6 +31,7 @@ sys.path.append("..")
 # Project imports
 import common.network
 import player
+import fps
 
 if len(sys.argv) < 2:
     server_addr = "localhost"
@@ -77,6 +78,8 @@ run = True
 event = SDL_Event()
 
 while run:
+    frame_start = SDL_GetTicks()
+
     while SDL_PollEvent(ctypes.byref(event)):
         if event.type == SDL_QUIT:
             run = False
@@ -136,6 +139,15 @@ while run:
     my_player.render(window_surf)
 
     SDL_UpdateWindowSurface(window)
+
+    # Sleep to maintain 60 FPS if necessary
+    if int(1000 / 60) > (SDL_GetTicks() - frame_start):
+        SDL_Delay(int(1000 / 60) - (SDL_GetTicks() - frame_start))
+
+    # Record frame time
+    fps.add_frame((SDL_GetTicks() - frame_start) / 1000)
+
+    print("(Averaging around", fps.get_fps(), "FPS)")
 
 common.network.send_packet(server, "leave")
 
