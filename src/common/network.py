@@ -24,7 +24,7 @@ def init_server():
     # TODO: IP is always v4. Make it agnostic.
     global __sock__
     __sock__ = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    __sock__.bind(("localhost", 12397))
+    __sock__.bind((socket.gethostname(), 12397))
 
 def init_client(addr, port):
     global __sock__
