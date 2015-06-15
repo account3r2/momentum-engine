@@ -72,7 +72,7 @@ SDL_Init(SDL_INIT_VIDEO)
 
 window = SDL_CreateWindow(b"Momentum Engine Client", SDL_WINDOWPOS_CENTERED,
     SDL_WINDOWPOS_CENTERED, win_size[0], win_size[1], 0)
-window_surf = SDL_GetWindowSurface(window)
+window_render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED)
 
 run = True
 event = SDL_Event()
@@ -133,12 +133,11 @@ while run:
 
     # Render
 
-    # Clear screen
-    SDL_FillRect(window_surf, None, ctypes.c_uint(0))
+    SDL_RenderClear(window_render)
 
-    my_player.render(window_surf)
+    my_player.render(window_render)
 
-    SDL_UpdateWindowSurface(window)
+    SDL_RenderPresent(window_render)
 
     # Sleep to maintain 60 FPS if necessary
     if int(1000 / 60) > (SDL_GetTicks() - frame_start):

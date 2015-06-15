@@ -37,5 +37,7 @@ class Player():
         self.__setattr__(k, v)
 
     def render(self, context):
-        sdl_rect = SDL_Rect(x = self.x, y = self.y, w = self.w, h = self.h)
-        SDL_FillRect(context, ctypes.byref(sdl_rect), ctypes.c_uint(0x00ffffff))
+        player_rect = SDL_Rect(x = self.x, y = self.y, w = self.w, h = self.h)
+        SDL_SetRenderDrawColor(context, 0xff, 0xff, 0xff, 0)
+        SDL_RenderFillRect(context, ctypes.byref(player_rect))
+        SDL_SetRenderDrawColor(context, 0, 0, 0, 0)
