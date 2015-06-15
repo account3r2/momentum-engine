@@ -33,10 +33,7 @@ import common.network
 import player
 import fps
 
-if len(sys.argv) < 2:
-    server_addr = "localhost"
-else:
-    server_addr = sys.argv[1]
+server_addr = "localhost" if len(sys.argv) < 2 else sys.argv[1]
 
 if not common.network.init_client(server_addr, 12397):
     print("Could not connect to server!")
@@ -146,7 +143,7 @@ while run:
     # Record frame time
     fps.add_frame((SDL_GetTicks() - frame_start) / 1000)
 
-    print("(Averaging around", fps.get_fps(), "FPS)")
+    print("(Averaging around", int(fps.get_fps()), "FPS)")
 
 common.network.send_packet(server, "leave")
 
