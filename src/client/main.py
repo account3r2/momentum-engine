@@ -101,18 +101,26 @@ while run:
 
         elif event.type == SDL_KEYUP:
             if event.key.keysym.sym == SDLK_w:
+                if my_player.ymovement == 0: continue
+
                 common.network.send_packet(server, "update",
                     value = {"ymovement" : my_player.ymovement + 1})
 
             elif event.key.keysym.sym == SDLK_s:
+                if my_player.ymovement == 0: continue
+
                 common.network.send_packet(server, "update",
                     value = {"ymovement" : my_player.ymovement - 1})
 
             elif event.key.keysym.sym == SDLK_a:
+                if my_player.xmovement == 0: continue
+
                 common.network.send_packet(server, "update",
                     value = {"xmovement" : my_player.xmovement + 1})
 
             elif event.key.keysym.sym == SDLK_d:
+                if my_player.xmovement == 0: continue
+
                 common.network.send_packet(server, "update",
                     value = {"xmovement" : my_player.xmovement - 1})
 
