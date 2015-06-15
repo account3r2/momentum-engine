@@ -33,10 +33,7 @@ import common.network
 import player
 import fps
 
-if len(sys.argv) < 2:
-    server_addr = "localhost"
-else:
-    server_addr = sys.argv[1]
+server_addr = "localhost" if len(sys.argv) < 2 else sys.argv[1]
 
 if not common.network.init_client(server_addr, 12397):
     print("Could not connect to server!")
