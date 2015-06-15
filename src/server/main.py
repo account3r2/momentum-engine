@@ -37,6 +37,8 @@ world = {
 
 common.network.init_server()
 
+print("Ready for connections")
+
 while True:
     # Handle incoming packets
     json_packet, host = common.network.recv_packet()
