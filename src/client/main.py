@@ -143,7 +143,7 @@ while run:
     # Record frame time
     fps.add_frame((SDL_GetTicks() - frame_start) / 1000)
 
-    print("(Averaging around", fps.get_fps(), "FPS)")
+    print("(Averaging around", int(fps.get_fps()), "FPS)")
 
 common.network.send_packet(server, "leave")
 
