@@ -33,6 +33,9 @@ import common.network
 import player
 import fps
 
+# List of keys that are down
+keys_down = []
+
 server_addr = "localhost" if len(sys.argv) < 2 else sys.argv[1]
 
 if not common.network.init_client(server_addr, 12397):
@@ -84,45 +87,61 @@ while run:
 
         elif event.type == SDL_KEYDOWN:
             if event.key.keysym.sym == SDLK_w:
-                common.network.send_packet(server, "update",
-                    value = {"ymovement" : my_player.ymovement - 1})
+                if not "w" in keys_down:
+                    keys_down.append("w")
+                    common.network.send_packet(server, "update",
+                        value = {"ymovement" : my_player.ymovement - 1})
 
             elif event.key.keysym.sym == SDLK_s:
-                common.network.send_packet(server, "update",
-                    value = {"ymovement" : my_player.ymovement + 1})
+                if not "s" in keys_down:
+                    keys_down.append("s")
+                    common.network.send_packet(server, "update",
+                        value = {"ymovement" : my_player.ymovement + 1})
 
             elif event.key.keysym.sym == SDLK_a:
-                common.network.send_packet(server, "update",
-                    value = {"xmovement" : my_player.xmovement - 1})
+                if not "a" in keys_down:
+                    keys_down.append("a")
+                    common.network.send_packet(server, "update",
+                        value = {"xmovement" : my_player.xmovement - 1})
 
             elif event.key.keysym.sym == SDLK_d:
-                common.network.send_packet(server, "update",
-                    value = {"xmovement" : my_player.xmovement + 1})
+                if not "d" in keys_down:
+                    keys_down.append("d")
+                    common.network.send_packet(server, "update",
+                        value = {"xmovement" : my_player.xmovement + 1})
 
         elif event.type == SDL_KEYUP:
             if event.key.keysym.sym == SDLK_w:
-                if my_player.ymovement == 0: continue
+                if "w" in keys_down:
+                    keys_down.remove("w")
+                    if my_player.ymovement == 0: continue
 
-                common.network.send_packet(server, "update",
-                    value = {"ymovement" : my_player.ymovement + 1})
+                    common.network.send_packet(server, "update",
+                        value = {"ymovement" : my_player.ymovement + 1})
 
             elif event.key.keysym.sym == SDLK_s:
-                if my_player.ymovement == 0: continue
+                if "s" in keys_down:
+                    keys_down.remove("s")
+                    if my_player.ymovement == 0: continue
 
-                common.network.send_packet(server, "update",
-                    value = {"ymovement" : my_player.ymovement - 1})
+                    common.network.send_packet(server, "update",
+                        value = {"ymovement" : my_player.ymovement - 1})
 
             elif event.key.keysym.sym == SDLK_a:
-                if my_player.xmovement == 0: continue
+                if "a" in keys_down:
+                    keys_down.remove("a")
+                    if my_player.xmovement == 0: continue
 
-                common.network.send_packet(server, "update",
-                    value = {"xmovement" : my_player.xmovement + 1})
+                    common.network.send_packet(server, "update",
+                        value = {"xmovement" : my_player.xmovement + 1})
 
             elif event.key.keysym.sym == SDLK_d:
-                if my_player.xmovement == 0: continue
+                if "d" in keys_down:
+                    keys_down.remove("d")
+                    if my_player.xmovement == 0: continue
 
-                common.network.send_packet(server, "update",
-                    value = {"xmovement" : my_player.xmovement - 1})
+                    common.network.send_packet(server, "update",
+                        value = {"xmovement" : my_player.xmovement - 1})
 
     common.network.send_packet(server, "retrieve", what = "player")
     packet, host = common.network.recv_packet()
