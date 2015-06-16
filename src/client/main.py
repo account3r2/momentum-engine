@@ -33,9 +33,6 @@ import common.network
 import player
 import fps
 
-# List of keys that are down
-keys_down = []
-
 server_addr = "localhost" if len(sys.argv) < 2 else sys.argv[1]
 
 if not common.network.init_client(server_addr, 12397):
@@ -67,6 +64,9 @@ resp, host = common.network.recv_packet()
 value = json.loads(resp["value"])
 
 my_player = player.Player(value["x"], value["y"], value["w"], value["h"])
+
+# List of keys that are down
+keys_down = []
 
 SDL_Init(SDL_INIT_VIDEO)
 
