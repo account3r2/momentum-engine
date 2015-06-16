@@ -67,7 +67,6 @@ class Player():
 
         if self.y + self.h > bounds[1]:
             self.in_air = False
-            self.ymovement = 0
             self.yvel = 0
             self.y = bounds[1] - self.h
 
