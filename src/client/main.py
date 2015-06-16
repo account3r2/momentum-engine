@@ -86,22 +86,22 @@ while run:
             break
 
         elif event.type == SDL_KEYDOWN:
-            if event.key.keysym.sym == SDLK_w and not "w" in keys_down:
+            if event.key.keysym.sym == SDLK_w and "w" not in keys_down:
                 keys_down.append("w")
                 common.network.send_packet(server, "update",
                     value = {"ymovement" : my_player.ymovement - 1})
 
-            elif event.key.keysym.sym == SDLK_s and not "s" in keys_down:
+            elif event.key.keysym.sym == SDLK_s and "s" not in keys_down:
                 keys_down.append("s")
                 common.network.send_packet(server, "update",
                     value = {"ymovement" : my_player.ymovement + 1})
 
-            elif event.key.keysym.sym == SDLK_a and not "a" in keys_down:
+            elif event.key.keysym.sym == SDLK_a and "a" not in keys_down:
                 keys_down.append("a")
                 common.network.send_packet(server, "update",
                     value = {"xmovement" : my_player.xmovement - 1})
 
-            elif event.key.keysym.sym == SDLK_d and not "d" in keys_down:
+            elif event.key.keysym.sym == SDLK_d and "d" not in keys_down:
                 keys_down.append("d")
                 common.network.send_packet(server, "update",
                     value = {"xmovement" : my_player.xmovement + 1})
