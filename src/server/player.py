@@ -44,10 +44,7 @@ class Player():
         if self.xmovement != 0:
             self.xvel += self.xmovement * self.accel
         else:
-            if self.xvel > 0:
-                self.xvel -= self.accel
-            else:
-                self.xvel += self.accel
+            self.xvel += -self.accel if self.xvel > 0 else self.accel
 
         if self.ymovement == -1 and not self.in_air:
             self.in_air = True
