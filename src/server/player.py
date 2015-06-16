@@ -27,6 +27,8 @@ class Player():
         self.yvel = 0
         self.xmovement = 0
         self.ymovement = 0
+        self.in_air = True
+        self.jump_vel = 25
         self.accel = 1 / 2
 
     def __getitem__(self, k):
@@ -47,13 +49,11 @@ class Player():
             else:
                 self.xvel += self.accel
 
-        if self.ymovement != 0:
-            self.yvel += self.ymovement * self.accel
+        if self.ymovement == -1 and not self.in_air:
+            self.in_air = True
+            self.yvel -= self.jump_vel * self.accel
         else:
-            if self.yvel > 0:
-                self.yvel -= self.accel
-            else:
-                self.yvel += self.accel
+            self.yvel += self.accel
 
         if self.y < 0:
             self.ymovement = 0
@@ -66,6 +66,7 @@ class Player():
             self.x = 0
 
         if self.y + self.h > bounds[1]:
+            self.in_air = False
             self.ymovement = 0
             self.yvel = 0
             self.y = bounds[1] - self.h
