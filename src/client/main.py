@@ -86,62 +86,54 @@ while run:
             break
 
         elif event.type == SDL_KEYDOWN:
-            if event.key.keysym.sym == SDLK_w:
-                if not "w" in keys_down:
-                    keys_down.append("w")
-                    common.network.send_packet(server, "update",
-                        value = {"ymovement" : my_player.ymovement - 1})
+            if event.key.keysym.sym == SDLK_w and not "w" in keys_down:
+                keys_down.append("w")
+                common.network.send_packet(server, "update",
+                    value = {"ymovement" : my_player.ymovement - 1})
 
-            elif event.key.keysym.sym == SDLK_s:
-                if not "s" in keys_down:
-                    keys_down.append("s")
-                    common.network.send_packet(server, "update",
-                        value = {"ymovement" : my_player.ymovement + 1})
+            elif event.key.keysym.sym == SDLK_s and not "s" in keys_down:
+                keys_down.append("s")
+                common.network.send_packet(server, "update",
+                    value = {"ymovement" : my_player.ymovement + 1})
 
-            elif event.key.keysym.sym == SDLK_a:
-                if not "a" in keys_down:
-                    keys_down.append("a")
-                    common.network.send_packet(server, "update",
-                        value = {"xmovement" : my_player.xmovement - 1})
+            elif event.key.keysym.sym == SDLK_a and not "a" in keys_down:
+                keys_down.append("a")
+                common.network.send_packet(server, "update",
+                    value = {"xmovement" : my_player.xmovement - 1})
 
-            elif event.key.keysym.sym == SDLK_d:
-                if not "d" in keys_down:
-                    keys_down.append("d")
-                    common.network.send_packet(server, "update",
-                        value = {"xmovement" : my_player.xmovement + 1})
+            elif event.key.keysym.sym == SDLK_d and not "d" in keys_down:
+                keys_down.append("d")
+                common.network.send_packet(server, "update",
+                    value = {"xmovement" : my_player.xmovement + 1})
 
         elif event.type == SDL_KEYUP:
-            if event.key.keysym.sym == SDLK_w:
-                if "w" in keys_down:
-                    keys_down.remove("w")
-                    if my_player.ymovement == 0: continue
+            if event.key.keysym.sym == SDLK_w and "w" in keys_down:
+                keys_down.remove("w")
+                if my_player.ymovement == 0: continue
 
-                    common.network.send_packet(server, "update",
-                        value = {"ymovement" : my_player.ymovement + 1})
+                common.network.send_packet(server, "update",
+                    value = {"ymovement" : my_player.ymovement + 1})
 
-            elif event.key.keysym.sym == SDLK_s:
-                if "s" in keys_down:
-                    keys_down.remove("s")
-                    if my_player.ymovement == 0: continue
+            elif event.key.keysym.sym == SDLK_s and "s" in keys_down:
+                keys_down.remove("s")
+                if my_player.ymovement == 0: continue
 
-                    common.network.send_packet(server, "update",
-                        value = {"ymovement" : my_player.ymovement - 1})
+                common.network.send_packet(server, "update",
+                    value = {"ymovement" : my_player.ymovement - 1})
 
-            elif event.key.keysym.sym == SDLK_a:
-                if "a" in keys_down:
-                    keys_down.remove("a")
-                    if my_player.xmovement == 0: continue
+            elif event.key.keysym.sym == SDLK_a and "a" in keys_down:
+                keys_down.remove("a")
+                if my_player.xmovement == 0: continue
 
-                    common.network.send_packet(server, "update",
-                        value = {"xmovement" : my_player.xmovement + 1})
+                common.network.send_packet(server, "update",
+                    value = {"xmovement" : my_player.xmovement + 1})
 
-            elif event.key.keysym.sym == SDLK_d:
-                if "d" in keys_down:
-                    keys_down.remove("d")
-                    if my_player.xmovement == 0: continue
+            elif event.key.keysym.sym == SDLK_d and "d" in keys_down:
+                keys_down.remove("d")
+                if my_player.xmovement == 0: continue
 
-                    common.network.send_packet(server, "update",
-                        value = {"xmovement" : my_player.xmovement - 1})
+                common.network.send_packet(server, "update",
+                    value = {"xmovement" : my_player.xmovement - 1})
 
     common.network.send_packet(server, "retrieve", what = "player")
     packet, host = common.network.recv_packet()
