@@ -56,8 +56,7 @@ class Player():
             self.yvel += self.accel
 
         if self.y < 0:
-            self.ymovement = 0
-            self.yvel = 0
+            self.yvel = -self.yvel
             self.y = 0
 
         if self.x < 0:
