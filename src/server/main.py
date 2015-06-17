@@ -43,8 +43,6 @@ while True:
     # Handle incoming packets
     json_packet, host = common.network.recv_packet()
 
-    print("\nPacket recieved from", host[0])
-
     if json_packet is None:
         print("Packet is not valid JSON")
         continue
@@ -52,8 +50,6 @@ while True:
     if not "type" in json_packet:
         print("Packet has no 'type' object. Ignoring...")
         continue
-
-    print("Packet type is", repr(json_packet["type"]))
 
     if json_packet["type"] == "join":
         # TODO : Only a single client is allowed.
