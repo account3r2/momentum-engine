@@ -141,10 +141,6 @@ while run:
     value = json.loads(packet["value"])
 
     for k in value:
-       # # Skip over server-specific values
-       # if not k in my_player:
-       #     continue
-
         my_player[k] = value[k]
 
     # Render
